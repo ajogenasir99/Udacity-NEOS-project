@@ -19,7 +19,7 @@ You'll edit this file in Tasks 3a and 3c.
 from ast import If
 from datetime import date
 import operator
-from itertools import islice
+import itertools
 from time import time
 
 
@@ -158,11 +158,11 @@ def create_filters(
         filters.append(end_date_filter)
 
     if distance_min:
-        distance_min_filter = DistanceFilter(operator.ge, diameter_min)
+        distance_min_filter = DistanceFilter(operator.ge, distance_min)
         filters.append(distance_min_filter)
 
     if distance_max:
-        distance_max_filter = DistanceFilter(operator.le, diameter_min)
+        distance_max_filter = DistanceFilter(operator.le, distance_max)
         filters.append(distance_max_filter)
 
     if velocity_min:
@@ -178,8 +178,8 @@ def create_filters(
         filters.append(diameter_min_filter)
 
     if diameter_max:
-        diamteter_max_filter = DiameterFilter(operator.le, diameter_min)
-        filters.append(diamteter_max_filter)
+        diameter_max_filter = DiameterFilter(operator.le, diameter_max)
+        filters.append(diameter_max_filter)
 
     if hazardous is not None:
         hazardous_filter = HazardousFilter(operator.eq, hazardous)
@@ -201,4 +201,4 @@ def limit(iterator, n=None):
     if (n is None) or (n == 0):
         return iterator
     else:
-        return iterator.islice(iterator, n)
+        return itertools.islice(iterator, n)

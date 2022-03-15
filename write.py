@@ -12,6 +12,7 @@ You'll edit this file in Part 4.
 """
 import csv
 import json
+from unittest import result
 
 
 def write_to_csv(results, filename):
@@ -29,6 +30,25 @@ def write_to_csv(results, filename):
         'designation', 'name', 'diameter_km', 'potentially_hazardous'
     )
     # TODO: Write the results to a CSV file, following the specification in the instructions.
+    with open(filename, 'w') as csvf:
+        writer = csv.DictWriter(csvf, fieldnames=fieldnames)
+        writer.writeheader()
+        for approach in results:
+            if not approach.name:
+                approach.name = 'None'
+            # if not approach.diameter:
+            #     approach.diameter = 'nan'
+            # if approach.hazardous == ''
+            ca = {
+                'datetime_utc': approach.time,
+                'distance_au': approach.distance,
+                'velocity_km_s': approach.velocity,
+                'designation': approach._designation,
+                'name': approach.neo.name,
+                'diameter_km': approach.neo.diameter,
+                'potentially_hazardous': approach.neo.hazardous
+            }
+            writer.writerow(ca)
 
 
 def write_to_json(results, filename):
@@ -43,3 +63,6 @@ def write_to_json(results, filename):
     :param filename: A Path-like object pointing to where the data should be saved.
     """
     # TODO: Write the results to a JSON file, following the specification in the instructions.
+    with open(filename, 'w') as jsonf:
+        output = [item.serialize() for item in results]
+        json.dump(output, jsonf, indent=4)

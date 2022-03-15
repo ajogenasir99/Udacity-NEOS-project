@@ -88,6 +88,7 @@ class NearEarthObject:
         # method for examples of advanced string formatting.
         return f"{self.fullname} has a diameter of {self.diameter:.3f} km and is{self.isHazardous} potentially hazardous."
 
+
     def __repr__(self):
         """Return `repr(self)`, a computer-readable string representation of this object."""
         return f"NearEarthObject(designation={self.designation!r}, name={self.name!r}, " \
@@ -165,6 +166,19 @@ class CloseApproach:
         """Return `repr(self)`, a computer-readable string representation of this object."""
         return f"CloseApproach(time={self.time_str!r}, distance={self.distance:.2f}, " \
                f"velocity={self.velocity:.2f}, neo={self.neo!r})"
+
+    def serialize(self):
+        if not self.neo.name:
+            self.neo.name = 'None'
+        return {
+            'datetime_utc': datetime_to_str(self.time),
+            'distance_au': self.distance,
+            'velocity_km_s': self.velocity,
+            'neo': {'designation': self.neo.designation,
+                    'name': self.neo.name,
+                    'diameter_km': self.neo.diameter,
+                    'potentially_hazardous': self.neo.hazardous}
+        }
 
 
 # neo = NearEarthObject(**{'pdes': '433', 'name': 'Eros', 'diameter': 16.478903546, 'pha': 'N'})
