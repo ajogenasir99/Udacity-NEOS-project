@@ -29,25 +29,15 @@ def write_to_csv(results, filename):
         'datetime_utc', 'distance_au', 'velocity_km_s',
         'designation', 'name', 'diameter_km', 'potentially_hazardous'
     )
-    # TODO: Write the results to a CSV file, following the specification in the instructions.
     with open(filename, 'w') as csvf:
         writer = csv.DictWriter(csvf, fieldnames=fieldnames)
         writer.writeheader()
         for approach in results:
-            if not approach.name:
-                approach.name = 'None'
-            # if not approach.diameter:
-            #     approach.diameter = 'nan'
-            # if approach.hazardous == ''
-            ca = {
-                'datetime_utc': approach.time,
-                'distance_au': approach.distance,
-                'velocity_km_s': approach.velocity,
-                'designation': approach._designation,
-                'name': approach.neo.name,
-                'diameter_km': approach.neo.diameter,
-                'potentially_hazardous': approach.neo.hazardous
-            }
+            # uses the serialize methods on each approach and merges
+            # the result it with the serialize method of the associated neo
+            # to get the required fieldnames and values
+
+            ca = {**approach.serialize(),**approach.neo.serialize()}
             writer.writerow(ca)
 
 
@@ -64,5 +54,13 @@ def write_to_json(results, filename):
     """
     # TODO: Write the results to a JSON file, following the specification in the instructions.
     with open(filename, 'w') as jsonf:
-        output = [item.serialize() for item in results]
+        output = []
+        for item in results:
+            # uses the serialize methods on each approach and merges
+            # it with a dictionary mapping the key 'neo' to a dictionary
+            # of the result of the serialize method
+            # of the associated neo
+
+            ca = item.serialize() | {"neo": item.neo.serialize()}
+            output.append(ca)
         json.dump(output, jsonf, indent=4)

@@ -96,6 +96,17 @@ class NearEarthObject:
                f"diameter={self.diameter:.3f}, hazardous={self.hazardous!r})"
 
 
+    def serialize(self):
+        # returns a dictionary with the relevant attributes for csv/json serialization
+
+        if not self.name:
+            self.name = 'None'
+        return {
+            'designation': self.designation,
+            'name': self.name,
+            'diameter_km': self.diameter,
+            'potentially_hazardous': self.hazardous
+        }
 
 class CloseApproach:
     """A close approach to Earth by an NEO.
@@ -168,18 +179,13 @@ class CloseApproach:
     def serialize(self):
         # returns a dictionary with the relevant attributes for csv/json serialization
 
-
-        if not self.neo.name:
-            self.neo.name = 'None'
         return {
             'datetime_utc': datetime_to_str(self.time),
             'distance_au': self.distance,
             'velocity_km_s': self.velocity,
-            'neo': {'designation': self.neo.designation,
-                    'name': self.neo.name,
-                    'diameter_km': self.neo.diameter,
-                    'potentially_hazardous': self.neo.hazardous}
         }
+
+    
 
 
 # neo = NearEarthObject(**{'pdes': '433', 'name': 'Eros', 'diameter': 16.478903546, 'pha': 'N'})
