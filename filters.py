@@ -78,30 +78,40 @@ class AttributeFilter:
 
 
 class DateFilter(AttributeFilter):
+    """A subclass to filter for Date."""
+
     @classmethod
     def get(cls, approach):
         return approach.time.date()
 
 
 class DistanceFilter(AttributeFilter):
+    """A subclass to filter for Distance."""
+
     @classmethod
     def get(cls, approach):
         return approach.distance
 
 
 class VelocityFilter(AttributeFilter):
+    """A subclass to filter for Velocity."""
+
     @classmethod
     def get(cls, approach):
         return approach.velocity
 
 
 class DiameterFilter(AttributeFilter):
+    """A subclass to filter for Diameter."""
+
     @classmethod
     def get(cls, approach):
         return approach.neo.diameter
 
 
 class HazardousFilter(AttributeFilter):
+    """A subclass to filter for Hazardous."""
+
     @classmethod
     def get(cls, approach):
         return approach.neo.hazardous
@@ -143,8 +153,9 @@ def create_filters(
     :param hazardous: Whether the NEO of a matching `CloseApproach` is potentially hazardous.
     :return: A collection of filters for use with `query`.
     """
-    # TODO: Decide how you will represent your filters.
+    # List that will hold all filters
     filters = []
+
     if date:
         date_filter = DateFilter(operator.eq, date)
         filters.append(date_filter)
@@ -197,7 +208,6 @@ def limit(iterator, n=None):
     :param n: The maximum number of values to produce.
     :yield: The first (at most) `n` values from the iterator.
     """
-    # TODO: Produce at most `n` values from the given iterator.
     if (n is None) or (n == 0):
         return iterator
     else:
