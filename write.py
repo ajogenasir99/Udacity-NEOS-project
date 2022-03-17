@@ -62,7 +62,7 @@ def write_to_json(results, filename):
             # it with a dictionary mapping the key 'neo' to a dictionary
             # of the result of the serialize method
             # of the associated neo
-
-            ca = item.serialize() | {"neo": item.neo.serialize()}
+            newdict = {"neo": item.neo.serialize()}
+            ca = {**item.serialize() , **newdict}
             output.append(ca)
         json.dump(output, jsonf, indent=4)

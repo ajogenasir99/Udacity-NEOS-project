@@ -109,8 +109,9 @@ class NearEarthObject:
         """returns a dictionary with the relevant attributes for csv/json
         serialization"""
 
-        if not self.name:
-            self.name = 'None'
+        if not self.name :
+            self.name = ''
+
         return {
             'designation': self.designation,
             'name': self.name,
