@@ -86,6 +86,11 @@ class DateFilter(AttributeFilter):
 
     @classmethod
     def get(cls, approach):
+        """To get access to the date attribute.
+        :param approach:
+        :return: approach.date
+        """
+
         return approach.time.date()
 
 
@@ -94,6 +99,11 @@ class DistanceFilter(AttributeFilter):
 
     @classmethod
     def get(cls, approach):
+        """To get access to the distance attribute.
+        :param approach:
+        :return: approach.distance
+        """
+
         return approach.distance
 
 
@@ -102,6 +112,11 @@ class VelocityFilter(AttributeFilter):
 
     @classmethod
     def get(cls, approach):
+        """To get access to the velocity attribute.
+        :param approach:
+        :return: approach.velocity
+        """
+
         return approach.velocity
 
 
@@ -110,6 +125,11 @@ class DiameterFilter(AttributeFilter):
 
     @classmethod
     def get(cls, approach):
+        """To get access to the diameter attribute.
+        :param approach:
+        :return: approach.neo.diameter
+        """
+
         return approach.neo.diameter
 
 
@@ -118,6 +138,11 @@ class HazardousFilter(AttributeFilter):
 
     @classmethod
     def get(cls, approach):
+        """To get access to the hazardous attribute.
+        :param approach:
+        :return: approach.neo.hazardous
+        """
+
         return approach.neo.hazardous
 
 

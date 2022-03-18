@@ -76,10 +76,7 @@ class NEODatabase:
         or `None`.
         """
 
-        if designation in self.neos_designations:
-            return self.neos_designations[designation]
-        else:
-            return None
+        return self.neos_designations.get(designation, None)
 
     def get_neo_by_name(self, name):
         """Find and return an NEO by its name.
@@ -95,10 +92,8 @@ class NEODatabase:
         :param name: The name, as a string, of the NEO to search for.
         :return: The `NearEarthObject` with the desired name, or `None`.
         """
-        if name in self.neos_names:
-            return self.neos_names[name]
-        else:
-            return None
+
+        return self.neos_names.get(name)
 
     def query(self, filters=()):
         """Query close approaches to generate those that match a collection of
@@ -118,10 +113,6 @@ class NEODatabase:
         :return: A stream of matching `CloseApproach` objects.
         """
         for approach in self._approaches:
-            flag = False
-            for filter in filters:
-                if not filter(approach):
-                    flag = True
-                    break
-            if not flag:
+
+            if all(f(approach) for f in filters):
                 yield approach

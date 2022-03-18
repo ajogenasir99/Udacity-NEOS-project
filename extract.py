@@ -14,7 +14,6 @@ commandline, and uses the resulting collections to build an `NEODatabase`.
 You'll edit this file in Task 2.
 """
 import csv
-from importlib.resources import contents
 import json
 
 from models import NearEarthObject, CloseApproach
@@ -40,9 +39,6 @@ def load_neos(neo_csv_path):
     return neos
 
 
-load_neos("./data/neos.csv")
-
-
 def load_approaches(cad_json_path):
     """Read close approach data from a JSON file.
 
@@ -61,4 +57,6 @@ def load_approaches(cad_json_path):
     return cad
 
 
-load_approaches("./data/cad.json")
+if __name__ == "__main__":
+    load_approaches("./data/cad.json")
+    load_neos("./data/neos.csv")
